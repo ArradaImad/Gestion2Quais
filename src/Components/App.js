@@ -1,12 +1,18 @@
 import { Route, Routes } from "react-router-dom";
+import Header from "./Header";
+import Login from "./Login";
+import Register from "./Register";
+import Warehouses from "./Warehouses";
 
 function App() {
   return (
-    <div className="min-h-screen">
-      {/* <h1 className="text-5xl text-gray-700 font-mono">Hello world</h1> */}
+    <div className="min-h-screen flex flex-col">
+      <Header/>
       <Routes>
         <Route path="/" element={<h1>hello world</h1>} />
-        <Route path="/warehouses" element={<h1>hi warehouses</h1>} />
+        <Route path="/warehouses" element={<Warehouses />} />
+        <Route path="/user/login" element={<Login />} />
+        <Route path="/user/register" element={<Register />} />
       </Routes>
     </div>
   );
