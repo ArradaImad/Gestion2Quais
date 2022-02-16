@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 async function loginUser(credentials) {
     let options = {
@@ -12,14 +13,18 @@ async function loginUser(credentials) {
 }
 
 function Login() {
-    const [login, setLogin] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit  = async (e) => {
         e.preventDefault();
 
-        // Call to async login function from API
-        const token = await loginUser({login, password});
+        const response = await loginUser({email, password});
+        if (response.ok) {
+            localStorage.setItem("@token", response.token);   
+        }
+
+        toast(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
     }
 
     return (
@@ -29,11 +34,11 @@ function Login() {
                     <h1 className="text-4xl text-center mb-4">Login</h1>
                     <div className="space-y-3">
                         <div>
-                            <label for="email" className="text-base font-semibold">Username or email</label>
-                            <input type="email" name="email" value={login} onChange={(e) => setLogin(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
+                            <label htmlfor="email" className="text-base font-semibold">Username or email</label>
+                            <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
-                            <label for="password" className="text-base font-semibold">Password</label>
+                            <label htmlfor="password" className="text-base font-semibold">Password</label>
                             <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                     </div>
