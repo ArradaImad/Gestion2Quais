@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { setToken } from './App';
 
 async function loginUser(credentials) {
     let options = {
@@ -21,10 +22,11 @@ function Login() {
 
         const response = await loginUser({email, password});
         if (response.ok) {
-            localStorage.setItem("@token", response.token);   
+            setToken(response.token);
+            toast.success(response.message, {position: toast.POSITION.BOTTOM_RIGHT});   
+        } else {
+            toast.error(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
         }
-
-        toast(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
     }
 
     return (

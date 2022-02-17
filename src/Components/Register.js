@@ -29,8 +29,11 @@ function Register() {
 
         if(response.ok) {
             navigate("/");
+            toast.success(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
         }
-        toast(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
+        else {
+            toast.error(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
+        }
     }
 
     return (
@@ -76,7 +79,7 @@ function Register() {
                         </div>
                     </div>
                     <div className="flex flex-col justify-center items-center">
-                        <button type="submit" className="whitespace-nowrap inline-flex items-center w-auto justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">Sign in</button>
+                        <button type="submit" className="whitespace-nowrap inline-flex items-center w-auto justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">Sign up</button>
                         <p className="text-gray-600 text-sm mt-2">Already have an account? <a href="/user/login" className="font-bold">Sign in</a></p>
                     </div>
                 </form>
