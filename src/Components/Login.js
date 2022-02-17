@@ -1,29 +1,23 @@
 import { useState } from 'react';
+import { useNavigate  } from "react-router-dom";
 import { toast } from 'react-toastify';
-import { setToken } from './App';
+import { authenticationService } from '../_services/authentication.service';
 
-async function loginUser(credentials) {
-    let options = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(credentials)
-    };
-    return fetch('http://localhost:3001/user/login', options).then(data => data.json());
-}
 
 function Login() {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit  = async (e) => {
         e.preventDefault();
 
-        const response = await loginUser({email, password});
+        const response = await authenticationService.login({email, password});
         if (response.ok) {
-            setToken(response.token);
-            toast.success(response.message, {position: toast.POSITION.BOTTOM_RIGHT});   
+            authenticationService.setCurrentUser(response.user);
+            authenticationService.setToken(response.token);
+            toast.success(response.message, {position: toast.POSITION.BOTTOM_RIGHT});  
+            navigate("/dashboard");
         } else {
             toast.error(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
         }
@@ -36,11 +30,11 @@ function Login() {
                     <h1 className="text-4xl text-center mb-4">Login</h1>
                     <div className="space-y-3">
                         <div>
-                            <label htmlfor="email" className="text-base font-semibold">Username or email</label>
+                            <label htmlFor="email" className="text-base font-semibold">Username or email</label>
                             <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
-                            <label htmlfor="password" className="text-base font-semibold">Password</label>
+                            <label htmlFor="password" className="text-base font-semibold">Password</label>
                             <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                     </div>

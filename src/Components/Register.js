@@ -1,17 +1,8 @@
 import { useState } from 'react';
 import { useNavigate  } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { authenticationService } from '../_services/authentication.service';
 
-async function registerUser(registration) {
-    let options = {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(registration)
-    };
-    return fetch('http://localhost:3001/user/register', options).then(data => data.json());
-}
 
 function Register() {
     const navigate = useNavigate();
@@ -25,10 +16,10 @@ function Register() {
         e.preventDefault();
 
         // Call to async Register function from API
-        const response = await registerUser({ firstname, lastname, email, password, profile });
+        const response = await authenticationService.register({ firstname, lastname, email, password, profile });
 
         if(response.ok) {
-            navigate("/");
+            navigate("/user/login");
             toast.success(response.message, {position: toast.POSITION.BOTTOM_RIGHT});
         }
         else {
@@ -43,19 +34,19 @@ function Register() {
                     <h1 className="text-4xl text-center mb-4">Register</h1>
                     <div className="space-y-3">
                         <div>
-                            <label htmlfor="firstname" className="text-base font-semibold">Firstname</label>
+                            <label htmlFor="firstname" className="text-base font-semibold">Firstname</label>
                             <input type="firstname" name="firstname" value={firstname} onChange={(e) => setFirstname(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
-                            <label htmlfor="lastname" className="text-base font-semibold">Lastname</label>
+                            <label htmlFor="lastname" className="text-base font-semibold">Lastname</label>
                             <input type="lastname" name="lastname" value={lastname} onChange={(e) => setLastname(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
-                            <label htmlfor="email" className="text-base font-semibold">Email</label>
+                            <label htmlFor="email" className="text-base font-semibold">Email</label>
                             <input type="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
-                            <label htmlfor="password" className="text-base font-semibold">Password</label>
+                            <label htmlFor="password" className="text-base font-semibold">Password</label>
                             <input type="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} className="flex items-center h-12 px-4 w-full bg-gray-100 mt-2 rounded focus:outline-none focus:ring-2" />
                         </div>
                         <div>
