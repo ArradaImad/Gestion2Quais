@@ -9,7 +9,7 @@ export const authenticationService = {
             body: JSON.stringify(credentials)
         };
         return fetch('http://localhost:3001/user/login', options)
-            .then(data => data.json());
+            .then(data => data.json(), err => err);
     },
 
     register: async (registration) => {
@@ -35,8 +35,7 @@ export const authenticationService = {
 
     getToken: () => {
         const tokenString = localStorage.getItem('@token');
-        const userToken = JSON.parse(tokenString);
-        return userToken?.token;
+        return JSON.parse(tokenString);
     },
 
     setCurrentUser: (user) => {
@@ -45,8 +44,7 @@ export const authenticationService = {
 
     getCurrentUser: () => {
         const userString = localStorage.getItem('@currentUser');
-        const currentUser = JSON.parse(userString);
-        return currentUser;
+        return JSON.parse(userString);
     },
 
 }
