@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { warehousesService } from "../../_services/warehouses.service";
+import WarehouseMinitature from "../Warehouse/WarehouseMinitature";
 
 function MyWarehouses() {
     const [warehouses, setWarehouses] = useState([]);
@@ -18,10 +19,7 @@ function MyWarehouses() {
             <h1 className="text-4xl mb-6">My warehouses</h1>
             <div className="grid gap-4 grid-cols-4">
                 {warehouses.map(warehouse => 
-                    <div className="bg-white rounded-md shadow-md px-6 py-4">
-                        <h3>{warehouse.name}</h3>
-
-                    </div>    
+                    <WarehouseMinitature warehouse={warehouse}/> 
                 )}
             </div>
         </div>
