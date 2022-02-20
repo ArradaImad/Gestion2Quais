@@ -19,4 +19,14 @@ export const warehousesService = {
         return fetch('http://localhost:3001/warehouses', options)
             .then(data => data.json(), (err) => err);
     },
+
+    searchWarehouses: async ({name, docks, address}) => {
+        const options = {
+            method: "POST",
+            headers: { ...authHeader(), "Content-type": "application/json"},
+            body: JSON.stringify({name, docks, address}),
+        };
+        return fetch('http://localhost:3001/warehouses/search', options)
+            .then(data => data.json(), (err) => err);
+    },
 }
