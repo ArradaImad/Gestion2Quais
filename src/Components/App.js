@@ -28,12 +28,9 @@ function App() {
       <Header currentUser={currentUser} />
       <Routes>
 
-        {currentUser ?
-          <Route path="/" element={<Navigate replace to="/dashboard" />} />
-          : <Route path="/" element={<Home />} />
-        }
 
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<requireAuth.requireAuth><Dashboard/></requireAuth.requireAuth>}>
           {/* Livreur */}
           <Route path="joined-warehouses" element={<requireAuth.requireLivreur><JoinedWarehouses /></requireAuth.requireLivreur> } />
           <Route path="search" element={<requireAuth.requireAuth><Search /></requireAuth.requireAuth>} />
